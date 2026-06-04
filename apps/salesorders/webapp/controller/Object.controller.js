@@ -26,6 +26,10 @@ sap.ui.define([
 						dataReceived: function () { oView.setBusy(false); }
 					}
 				});
+			}).catch(function () {
+				// Metadata failed to load - clear the busy state so the view
+				// doesn't stay spinning indefinitely.
+				oView.setBusy(false);
 			});
 		}
 	});

@@ -51,7 +51,20 @@ sap.ui.define([
 			sap.ui.require(["sap/ui/core/Messaging"], function (Messaging) {
 				if (oObject) {
 					Messaging.registerObject(oObject, true);
+					return;
 				}
+				// The modern Messaging.registerObject requires a ManagedObject;
+				// there is no global equivalent to the old "register the core"
+				// behaviour. Warn rather than fail silently so a caller that
+				// relied on the no-argument form is not left without handling.
+				sap.ui.require(["sap/base/Log"], function (Log) {
+					Log.warning(
+						"attachGlobalErrorHandler called without a ManagedObject; on UI5 1.118+ " +
+						"Messaging.registerObject requires one (e.g. the app Component), so no " +
+						"object was registered.",
+						"com.meridian.lib.reuse.messages"
+					);
+				});
 			}, function () {
 				// Older UI5 runtimes (< 1.118) - use the deprecated MessageManager.
 				var oCore = sap.ui.getCore();
