@@ -12,7 +12,7 @@ sap.ui.define([
 		shortDate: reuseFormatter.shortDate,
 
 		amountOnly: function (sValue) {
-			if (!sValue) {
+			if (sValue === undefined || sValue === null || sValue === "") {
 				return "";
 			}
 			return oAmountFormat.format(parseFloat(sValue));

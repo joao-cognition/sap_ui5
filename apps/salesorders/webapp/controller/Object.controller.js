@@ -12,14 +12,20 @@ sap.ui.define([
 		_onObjectMatched: function (oEvent) {
 			var sOrderId = oEvent.getParameter("arguments").orderId;
 			var oView = this.getView();
-			var sPath = oView.getModel().createKey("SalesOrderSet", { OrderID: sOrderId });
-			oView.bindElement({
-				path: "/" + sPath,
-				parameters: { expand: "ToLineItems" },
-				events: {
-					dataRequested: function () { oView.setBusy(true); },
-					dataReceived: function () { oView.setBusy(false); }
-				}
+			var oModel = oView.getModel();
+			oView.setBusy(true);
+			// Manifest-declared OData models load metadata asynchronously, so wait for
+			// it before createKey resolves the entity type's key properties.
+			oModel.metadataLoaded().then(function () {
+				var sPath = oModel.createKey("SalesOrderSet", { OrderID: sOrderId });
+				oView.bindElement({
+					path: "/" + sPath,
+					parameters: { expand: "ToLineItems" },
+					events: {
+						dataRequested: function () { oView.setBusy(true); },
+						dataReceived: function () { oView.setBusy(false); }
+					}
+				});
 			});
 		}
 	});

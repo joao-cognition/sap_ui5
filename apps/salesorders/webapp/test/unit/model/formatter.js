@@ -45,5 +45,11 @@ sap.ui.define([
 	QUnit.test("empty input returns empty", function (assert) {
 		assert.strictEqual(formatter.amountOnly(""), "");
 		assert.strictEqual(formatter.amountOnly(null), "");
+		assert.strictEqual(formatter.amountOnly(undefined), "");
+	});
+
+	QUnit.test("numeric zero formats instead of returning empty", function (assert) {
+		assert.strictEqual(formatter.amountOnly(0), "0.00", "numeric 0 -> 0.00");
+		assert.strictEqual(formatter.amountOnly("0"), "0.00", "string '0' -> 0.00");
 	});
 });
