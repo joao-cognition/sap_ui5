@@ -1,9 +1,11 @@
-jQuery.sap.declare("com.meridian.salesorders.controller.App");
-jQuery.sap.require("com.meridian.salesorders.controller.BaseController");
+sap.ui.define([
+	"com/meridian/salesorders/controller/BaseController"
+], function (BaseController) {
+	"use strict";
 
-com.meridian.salesorders.controller.BaseController.extend("com.meridian.salesorders.controller.App", {
-	onInit: function () {
-		// busy indicator handling done the old way against the root view
-		this.getView().addStyleClass("sapUiSizeCompact");
-	}
+	return BaseController.extend("com.meridian.salesorders.controller.App", {
+		onInit: function () {
+			this.getView().addStyleClass("sapUiSizeCompact");
+		}
+	});
 });

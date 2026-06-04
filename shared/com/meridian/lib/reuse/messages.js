@@ -1,38 +1,64 @@
 /*!
- * Tiny message helper that wraps sap.m.MessageBox. Loaded via jQuery.sap.require and
- * registers a GLOBAL error handler on the core message manager. Migration X-04 / X-05.
+ * Tiny message helper that wraps sap.m.MessageBox.
+ *
+ * Modernised to AMD (sap.ui.define). The window.MERIDIAN_REUSE_LOADED global flag
+ * has been removed. attachGlobalErrorHandler now prefers the modern
+ * sap/ui/core/Messaging API when it is available (1.118+) and transparently falls
+ * back to the deprecated core MessageManager on older runtimes.
+ *
+ * Only sap/m/MessageBox is imported statically because this file is still loaded
+ * by the approvals (1.52) and partners (1.71) apps via jQuery.sap.require, and
+ * sap/ui/core/Messaging / sap/base/Log do not exist on those versions. Those
+ * modern modules are therefore required lazily, guarded by an errback.
  */
-jQuery.sap.declare("com.meridian.lib.reuse.messages");
-jQuery.sap.require("sap.m.MessageBox");
+sap.ui.define([
+	"sap/m/MessageBox"
+], function (MessageBox) {
+	"use strict";
 
-com.meridian.lib.reuse.messages = {
+	var oMessages = {
 
-	error: function (sText) {
-		sap.m.MessageBox.error(sText || "An unexpected error occurred.");
-	},
+		error: function (sText) {
+			MessageBox.error(sText || "An unexpected error occurred.");
+		},
 
-	success: function (sText) {
-		sap.m.MessageBox.success(sText || "Done.");
-	},
+		success: function (sText) {
+			MessageBox.success(sText || "Done.");
+		},
 
-	confirm: function (sText, fnOnConfirm) {
-		sap.m.MessageBox.confirm(sText, {
-			onClose: function (sAction) {
-				if (sAction === sap.m.MessageBox.Action.OK && typeof fnOnConfirm === "function") {
-					fnOnConfirm();
+		confirm: function (sText, fnOnConfirm) {
+			MessageBox.confirm(sText, {
+				onClose: function (sAction) {
+					if (sAction === MessageBox.Action.OK && typeof fnOnConfirm === "function") {
+						fnOnConfirm();
+					}
 				}
-			}
-		});
-	},
+			});
+		},
 
-	/**
-	 * Attaches a catch-all handler to the global message processor. Apps call this once at
-	 * startup. The handler reads window.MERIDIAN_REUSE_LOADED — global coupling.
-	 */
-	attachGlobalErrorHandler: function () {
-		if (!window.MERIDIAN_REUSE_LOADED) {
-			jQuery.sap.log.warning("[reuse] library not loaded yet");
+		/**
+		 * Registers the core as a managed object on the message processor so that
+		 * model/validation messages surface centrally. Prefers the modern
+		 * Messaging module, falling back to the deprecated MessageManager.
+		 */
+		attachGlobalErrorHandler: function () {
+			var oCore = sap.ui.getCore();
+			sap.ui.require(["sap/ui/core/Messaging"], function (Messaging) {
+				Messaging.registerObject(oCore, true);
+			}, function () {
+				// Older UI5 runtimes (< 1.118) - use the deprecated MessageManager.
+				oCore.getMessageManager().registerObject(oCore, true);
+			});
 		}
-		sap.ui.getCore().getMessageManager().registerObject(sap.ui.getCore(), true);
-	}
-};
+	};
+
+	// Backward-compat: register on the legacy global namespace.
+	var oGlobal = (typeof window !== "undefined" ? window : this);
+	oGlobal.com = oGlobal.com || {};
+	oGlobal.com.meridian = oGlobal.com.meridian || {};
+	oGlobal.com.meridian.lib = oGlobal.com.meridian.lib || {};
+	oGlobal.com.meridian.lib.reuse = oGlobal.com.meridian.lib.reuse || {};
+	oGlobal.com.meridian.lib.reuse.messages = oMessages;
+
+	return oMessages;
+});

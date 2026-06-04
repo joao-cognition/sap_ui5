@@ -73,6 +73,14 @@
 			<Association Name="SalesOrder_LineItems">
 				<End Type="MERIDIAN.SalesOrder" Multiplicity="1" Role="FromOrder"/>
 				<End Type="MERIDIAN.SalesOrderItem" Multiplicity="*" Role="ToItems"/>
+				<ReferentialConstraint>
+					<Principal Role="FromOrder">
+						<PropertyRef Name="OrderID"/>
+					</Principal>
+					<Dependent Role="ToItems">
+						<PropertyRef Name="OrderID"/>
+					</Dependent>
+				</ReferentialConstraint>
 			</Association>
 
 			<EntityContainer Name="MERIDIAN_Entities" m:IsDefaultEntityContainer="true">

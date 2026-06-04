@@ -1,5 +1,5 @@
 {
-	"_version": "1.8.0",
+	"_version": "1.65.0",
 	"sap.app": {
 		"id": "com.meridian.salesorders",
 		"type": "application",
@@ -8,6 +8,15 @@
 		"description": "{{appDescription}}",
 		"applicationVersion": {
 			"version": "0.9.3"
+		},
+		"dataSources": {
+			"salesOrderService": {
+				"uri": "/sap/opu/odata/sap/ZSD_SALESORDER_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
 		}
 	},
 	"sap.ui": {
@@ -17,7 +26,7 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_belize", "sap_bluecrystal"]
+		"supportedThemes": ["sap_horizon"]
 	},
 	"sap.ui5": {
 		"rootView": {
@@ -26,14 +35,28 @@
 			"id": "appRoot"
 		},
 		"dependencies": {
-			"minUI5Version": "1.38.0",
+			"minUI5Version": "1.120.0",
 			"libs": {
 				"sap.m": {},
 				"sap.ui.layout": {},
 				"sap.ui.core": {}
 			}
 		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
 		"models": {
+			"": {
+				"dataSource": "salesOrderService",
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"useBatch": false
+				}
+			},
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
@@ -48,7 +71,8 @@
 				"viewPath": "com.meridian.salesorders.view",
 				"controlId": "app",
 				"controlAggregation": "pages",
-				"transition": "slide"
+				"transition": "slide",
+				"async": true
 			},
 			"routes": [
 				{
