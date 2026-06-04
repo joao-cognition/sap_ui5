@@ -54,7 +54,8 @@
 				"dataSource": "salesOrderService",
 				"settings": {
 					"defaultBindingMode": "TwoWay",
-					"useBatch": false
+					"useBatch": false,
+					"sizeLimit": 500
 				}
 			},
 			"i18n": {

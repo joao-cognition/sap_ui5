@@ -37,17 +37,25 @@ sap.ui.define([
 		},
 
 		/**
-		 * Registers the core as a managed object on the message processor so that
+		 * Registers a managed object on the message processor so that
 		 * model/validation messages surface centrally. Prefers the modern
 		 * Messaging module, falling back to the deprecated MessageManager.
+		 *
+		 * @param {sap.ui.base.ManagedObject} [oObject] Object to register
+		 *   (e.g. the app Component). The modern Messaging.registerObject API
+		 *   requires a ManagedObject, so callers on 1.118+ must pass one. On
+		 *   older runtimes the deprecated MessageManager is used with the core,
+		 *   preserving the previous behaviour for the legacy apps.
 		 */
-		attachGlobalErrorHandler: function () {
-			var oCore = sap.ui.getCore();
+		attachGlobalErrorHandler: function (oObject) {
 			sap.ui.require(["sap/ui/core/Messaging"], function (Messaging) {
-				Messaging.registerObject(oCore, true);
+				if (oObject) {
+					Messaging.registerObject(oObject, true);
+				}
 			}, function () {
 				// Older UI5 runtimes (< 1.118) - use the deprecated MessageManager.
-				oCore.getMessageManager().registerObject(oCore, true);
+				var oCore = sap.ui.getCore();
+				oCore.getMessageManager().registerObject(oObject || oCore, true);
 			});
 		}
 	};

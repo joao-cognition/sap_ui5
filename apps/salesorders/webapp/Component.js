@@ -9,8 +9,9 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/core/util/MockServer",
-	"com/meridian/lib/reuse/library"
-], function (UIComponent, MockServer) {
+	"com/meridian/lib/reuse/library",
+	"com/meridian/lib/reuse/messages"
+], function (UIComponent, MockServer, ReuseLibrary, messages) {
 	"use strict";
 
 	return UIComponent.extend("com.meridian.salesorders.Component", {
@@ -34,6 +35,10 @@ sap.ui.define([
 
 		init: function () {
 			UIComponent.prototype.init.apply(this, arguments);
+
+			// Register the central message processor so OData model / validation
+			// messages surface globally (preserved from the pre-migration component).
+			messages.attachGlobalErrorHandler(this);
 
 			// Initialise the (async) router so the default route is displayed.
 			this.getRouter().initialize();
