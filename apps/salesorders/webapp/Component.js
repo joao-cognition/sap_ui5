@@ -1,67 +1,71 @@
 /*!
- * Sales Orders component. Classic (non-sap.ui.define) module style. Creates the OData V2
- * model in code with SYNCHRONOUS metadata load and initialises routing manually instead of
- * letting the manifest do it. Migration items SO-01 / SO-03 / X-04.
+ * Sales Orders component (AMD / sap.ui.define).
+ *
+ * The OData V2 model and routing are now configured declaratively in the
+ * manifest (sap.app.dataSources + sap.ui5.models + routing.config.async=true),
+ * so this component only has to start the local MockServer before the base
+ * init runs - that way the model's $metadata request is intercepted.
  */
-jQuery.sap.declare("com.meridian.salesorders.Component");
-jQuery.sap.require("sap.ui.core.UIComponent");
-jQuery.sap.require("sap.ui.model.odata.v2.ODataModel");
-jQuery.sap.require("sap.ui.core.util.MockServer");
+sap.ui.define([
+	"sap/ui/core/UIComponent",
+	"sap/ui/core/util/MockServer",
+	"com/meridian/lib/reuse/library",
+	"com/meridian/lib/reuse/messages"
+], function (UIComponent, MockServer, ReuseLibrary, messages) {
+	"use strict";
 
-// pull the shared reuse library in at runtime (sync require) — debt X-04
-jQuery.sap.registerResourcePath("com.meridian.lib.reuse", "../../../shared/com/meridian/lib/reuse");
-jQuery.sap.require("com.meridian.lib.reuse.library");
-jQuery.sap.require("com.meridian.lib.reuse.messages");
+	return UIComponent.extend("com.meridian.salesorders.Component", {
 
-sap.ui.core.UIComponent.extend("com.meridian.salesorders.Component", {
+		metadata: {
+			manifest: "json"
+		},
 
-	metadata: {
-		manifest: "json"
-	},
+		SERVICE_URL: "/sap/opu/odata/sap/ZSD_SALESORDER_SRV/",
 
-	// service URL of the on-prem Gateway service (intercepted locally by MockServer)
-	SERVICE_URL: "/sap/opu/odata/sap/ZSD_SALESORDER_SRV/",
+		/**
+		 * The OData model is declared in the manifest, which means UI5 instantiates
+		 * it (and fires its $metadata request) while running the base Component
+		 * constructor - before init() would run. So the MockServer has to be started
+		 * here, before the super constructor, to intercept that first request.
+		 */
+		constructor: function () {
+			this._startMockServer();
+			UIComponent.apply(this, arguments);
+		},
 
-	init: function () {
-		// start the local mock so the app runs without the Gateway box
-		this._startMockServer();
+		init: function () {
+			UIComponent.prototype.init.apply(this, arguments);
 
-		// call base init
-		sap.ui.core.UIComponent.prototype.init.apply(this, arguments);
+			// Register the central message processor so OData model / validation
+			// messages surface globally (preserved from the pre-migration component).
+			messages.attachGlobalErrorHandler(this);
 
-		// OData V2 model built in CODE (not in manifest). Metadata loaded SYNCHRONOUSLY.
-		var oModel = new sap.ui.model.odata.v2.ODataModel(this.SERVICE_URL, {
-			loadMetadataAsync: false,
-			defaultBindingMode: "TwoWay",
-			useBatch: false
-		});
-		oModel.setSizeLimit(500);
-		this.setModel(oModel);
+			// Initialise the (async) router so the default route is displayed.
+			this.getRouter().initialize();
+		},
 
-		// register global error handler from the reuse lib
-		com.meridian.lib.reuse.messages.attachGlobalErrorHandler();
+		_startMockServer: function () {
+			// Resolve the /mock folder relative to this app's resource root so the
+			// same MockServer config works from the app index.html and from the
+			// QUnit / OPA5 test entry points (which live under different folders).
+			var sAppRoot = sap.ui.require.toUrl("com/meridian/salesorders");
+			var sMockBase = sAppRoot + "/../../../mock";
 
-		// routing initialised manually (manifest has the routes but we kick it off here)
-		this.getRouter().initialize();
-	},
+			var oMockServer = new MockServer({ rootUri: this.SERVICE_URL });
+			MockServer.config({ autoRespond: true, autoRespondAfter: 200 });
+			oMockServer.simulate(sMockBase + "/metadata.xml", {
+				sMockdataBaseUrl: sMockBase,
+				bGenerateMissingMockData: true
+			});
+			oMockServer.start();
+			this._oMockServer = oMockServer;
+		},
 
-	_startMockServer: function () {
-		var sServiceUrl = this.SERVICE_URL;
-		var oMockServer = new sap.ui.core.util.MockServer({ rootUri: sServiceUrl });
-		sap.ui.core.util.MockServer.config({ autoRespond: true, autoRespondAfter: 200 });
-		// metadata + mock data live in the repo /mock folder, three levels up from webapp
-		oMockServer.simulate("../../../mock/metadata.xml", {
-			sMockdataBaseUrl: "../../../mock",
-			bGenerateMissingMockData: true
-		});
-		oMockServer.start();
-		this._oMockServer = oMockServer;
-	},
-
-	destroy: function () {
-		if (this._oMockServer) {
-			this._oMockServer.stop();
+		destroy: function () {
+			if (this._oMockServer) {
+				this._oMockServer.stop();
+			}
+			UIComponent.prototype.destroy.apply(this, arguments);
 		}
-		sap.ui.core.UIComponent.prototype.destroy.apply(this, arguments);
-	}
+	});
 });

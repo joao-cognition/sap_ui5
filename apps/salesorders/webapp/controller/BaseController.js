@@ -1,11 +1,10 @@
-/*!
- * App-level base controller. Extends the shared reuse BaseController (which itself is full of
- * jQuery.sap.* debt) and pins the formatter onto the controller for view binding.
- */
-jQuery.sap.declare("com.meridian.salesorders.controller.BaseController");
-jQuery.sap.require("com.meridian.lib.reuse.BaseController");
-jQuery.sap.require("com.meridian.salesorders.model.formatter");
+sap.ui.define([
+	"com/meridian/lib/reuse/BaseController",
+	"com/meridian/salesorders/model/formatter"
+], function (ReuseBaseController, formatter) {
+	"use strict";
 
-com.meridian.lib.reuse.BaseController.extend("com.meridian.salesorders.controller.BaseController", {
-	formatter: com.meridian.salesorders.model.formatter
+	return ReuseBaseController.extend("com.meridian.salesorders.controller.BaseController", {
+		formatter: formatter
+	});
 });

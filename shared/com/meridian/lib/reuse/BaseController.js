@@ -1,77 +1,97 @@
 /*!
- * Shared base controller used by salesorders, approvals and partners.
- * Full of deprecated jQuery.sap.* calls and global core lookups. Migration items X-04 / X-05.
+ * Shared base controller used by salesorders (1.120) and partners (1.71).
+ *
+ * Modernised to AMD (sap.ui.define) with proper imports instead of the legacy
+ * jQuery.sap.* facade. Backward compatibility is preserved by also registering
+ * the class on the global com.meridian.lib.reuse.BaseController namespace so the
+ * partners app can keep doing `com.meridian.lib.reuse.BaseController.extend(...)`.
  */
-jQuery.sap.declare("com.meridian.lib.reuse.BaseController");
-jQuery.sap.require("sap.ui.core.mvc.Controller");
-jQuery.sap.require("sap.ui.core.routing.History");
+sap.ui.define([
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/core/routing/History",
+	"sap/base/Log",
+	"sap/m/MessageToast"
+], function (Controller, History, Log, MessageToast) {
+	"use strict";
 
-sap.ui.core.mvc.Controller.extend("com.meridian.lib.reuse.BaseController", {
+	var BaseController = Controller.extend("com.meridian.lib.reuse.BaseController", {
 
-	/**
-	 * Returns the router. Uses the deprecated component-router lookup pattern.
-	 */
-	getRouter: function () {
-		return sap.ui.core.UIComponent.getRouterFor(this);
-	},
+		/**
+		 * Returns the router for the owner component.
+		 */
+		getRouter: function () {
+			return this.getOwnerComponent().getRouter();
+		},
 
-	getModel: function (sName) {
-		return this.getView().getModel(sName);
-	},
+		getModel: function (sName) {
+			return this.getView().getModel(sName);
+		},
 
-	setModel: function (oModel, sName) {
-		return this.getView().setModel(oModel, sName);
-	},
+		setModel: function (oModel, sName) {
+			return this.getView().setModel(oModel, sName);
+		},
 
-	getResourceBundle: function () {
-		// reaches into the owner component's i18n model
-		return this.getOwnerComponent().getModel("i18n").getResourceBundle();
-	},
+		getResourceBundle: function () {
+			return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+		},
 
-	/**
-	 * Resolve an i18n text. Logs via the deprecated jQuery.sap.log facade.
-	 */
-	getText: function (sKey, aArgs) {
-		var sText = this.getResourceBundle().getText(sKey, aArgs);
-		jQuery.sap.log.debug("[reuse] i18n " + sKey + " -> " + sText);
-		return sText;
-	},
+		/**
+		 * Resolve an i18n text.
+		 */
+		getText: function (sKey, aArgs) {
+			var sText = this.getResourceBundle().getText(sKey, aArgs);
+			Log.debug("[reuse] i18n " + sKey + " -> " + sText);
+			return sText;
+		},
 
-	/**
-	 * Generic nav-back. Uses the deprecated History singleton + global hash changer.
-	 */
-	onNavBack: function () {
-		var sPreviousHash = sap.ui.core.routing.History.getInstance().getPreviousHash();
-		if (sPreviousHash !== undefined) {
-			window.history.go(-1);
-		} else {
-			this.getRouter().navTo("worklist", {}, true);
+		/**
+		 * Generic nav-back using the History singleton.
+		 */
+		onNavBack: function () {
+			var sPreviousHash = History.getInstance().getPreviousHash();
+			if (sPreviousHash !== undefined) {
+				window.history.go(-1);
+			} else {
+				this.getRouter().navTo("worklist", {}, true);
+			}
+		},
+
+		/**
+		 * Toast helper.
+		 */
+		toast: function (sMessage) {
+			MessageToast.show(sMessage);
+		},
+
+		/**
+		 * Debounced refresh using the standard timer APIs.
+		 */
+		scheduleRefresh: function (fnCallback) {
+			if (this._iRefreshTimer) {
+				clearTimeout(this._iRefreshTimer);
+			}
+			this._iRefreshTimer = setTimeout(fnCallback.bind(this), 400);
+		},
+
+		/**
+		 * Looks a control up globally across the whole core.
+		 * @deprecated Global core lookups are discouraged - prefer this.byId(sId)
+		 * which scopes the lookup to the current view. Kept only for backward
+		 * compatibility with code that relied on cross-view lookups.
+		 */
+		byGlobalId: function (sId) {
+			return sap.ui.getCore().byId(sId);
 		}
-	},
+	});
 
-	/**
-	 * Toast helper. Pulls MessageToast lazily via jQuery.sap.require (sync!) — migration X-04.
-	 */
-	toast: function (sMessage) {
-		jQuery.sap.require("sap.m.MessageToast");
-		sap.m.MessageToast.show(sMessage);
-	},
+	// Backward-compat: register the class on the legacy global namespace so the
+	// partners app (loaded via jQuery.sap.require) can extend it.
+	var oGlobal = (typeof window !== "undefined" ? window : this);
+	oGlobal.com = oGlobal.com || {};
+	oGlobal.com.meridian = oGlobal.com.meridian || {};
+	oGlobal.com.meridian.lib = oGlobal.com.meridian.lib || {};
+	oGlobal.com.meridian.lib.reuse = oGlobal.com.meridian.lib.reuse || {};
+	oGlobal.com.meridian.lib.reuse.BaseController = BaseController;
 
-	/**
-	 * Debounced refresh using the deprecated jQuery.sap.delayedCall.
-	 */
-	scheduleRefresh: function (fnCallback) {
-		if (this._iRefreshTimer) {
-			jQuery.sap.clearDelayedCall(this._iRefreshTimer);
-		}
-		this._iRefreshTimer = jQuery.sap.delayedCall(400, this, fnCallback);
-	},
-
-	/**
-	 * Looks a control up GLOBALLY across the whole core — works across views/apps but is
-	 * exactly the pattern we want gone. Migration item X-05.
-	 */
-	byGlobalId: function (sId) {
-		return sap.ui.getCore().byId(sId);
-	}
+	return BaseController;
 });

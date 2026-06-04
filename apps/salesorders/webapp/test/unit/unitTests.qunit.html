@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Unit Tests - Sales Orders</title>
+    <script
+        id="sap-ui-bootstrap"
+        src="https://openui5.hana.ondemand.com/1.120.30/resources/sap-ui-core.js"
+        data-sap-ui-async="true"
+        data-sap-ui-language="en"
+        data-sap-ui-resourceroots='{ "com.meridian.salesorders": "../../", "com.meridian.lib.reuse": "../../../../../shared/com/meridian/lib/reuse" }'>
+    </script>
+    <link rel="stylesheet" href="https://openui5.hana.ondemand.com/1.120.30/resources/sap/ui/thirdparty/qunit-2.css">
+    <script src="https://openui5.hana.ondemand.com/1.120.30/resources/sap/ui/thirdparty/qunit-2.js"></script>
+    <script src="https://openui5.hana.ondemand.com/1.120.30/resources/sap/ui/qunit/qunit-junit.js"></script>
+    <script>
+        sap.ui.require(["com/meridian/salesorders/test/unit/model/formatter"], function () {
+            QUnit.start();
+        });
+    </script>
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+</body>
+</html>
