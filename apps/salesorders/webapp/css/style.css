@@ -1,0 +1,10 @@
+/* Hand-written overrides that fight the theme. Migration item X-09 (drop in favour of
+   theme-compliant classes). Not even loaded via manifest resources - injected in code. */
+.meridianHighlight {
+	background-color: #fff3cd !important;
+	border-left: 4px solid #ffc107 !important;
+}
+
+.meridianTable .sapMListTblCell {
+	font-size: 0.875rem;
+}

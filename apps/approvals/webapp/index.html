@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<title>Purchase Approvals - Meridian</title>
+
+	<!-- LEGACY BOOTSTRAP: pinned to 1.52.39, theme sap_bluecrystal (Fiori 2.0 era), sync.
+	     Different version AND theme from the other apps. Migration X-01/X-02/X-03. -->
+	<script
+		id="sap-ui-bootstrap"
+		src="https://openui5.hana.ondemand.com/1.52.39/resources/sap-ui-core.js"
+		data-sap-ui-theme="sap_bluecrystal"
+		data-sap-ui-libs="sap.m,sap.ui.layout"
+		data-sap-ui-compatVersion="edge"
+		data-sap-ui-async="false"
+		data-sap-ui-resourceroots='{
+			"com.meridian.approvals": "./",
+			"com.meridian.lib.reuse": "../../../shared/com/meridian/lib/reuse"
+		}'>
+	</script>
+
+	<script>
+		sap.ui.getCore().attachInit(function () {
+			new sap.m.Shell({
+				app: new sap.ui.core.ComponentContainer({
+					height: "100%",
+					name: "com.meridian.approvals"
+				})
+			}).placeAt("content");
+		});
+	</script>
+</head>
+<body class="sapUiBody" id="content"></body>
+</html>

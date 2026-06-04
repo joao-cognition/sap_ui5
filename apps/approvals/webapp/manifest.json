@@ -1,0 +1,26 @@
+{
+	"_version": "1.2.0",
+	"sap.app": {
+		"_comment": "PARTIAL descriptor. No dataSources, no models block. Data is fetched with raw jQuery.ajax in util/ServiceClient.js. Migration items AP-02 / AP-03.",
+		"id": "com.meridian.approvals",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "Purchase Approvals",
+		"applicationVersion": {
+			"version": "0.4.1"
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "com.meridian.approvals.view.App",
+			"type": "JS"
+		},
+		"dependencies": {
+			"minUI5Version": "1.52.0",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		}
+	}
+}

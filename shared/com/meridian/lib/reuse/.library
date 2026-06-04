@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<library xmlns="http://www.sap.com/sap.ui.library.xsd">
+	<name>com.meridian.lib.reuse</name>
+	<vendor>Meridian Manufacturing</vendor>
+	<copyright>(c) Meridian Manufacturing. Internal use only.</copyright>
+	<version>0.9.3</version>
+	<documentation>Shared reuse components for the ZUI5_MERIDIAN app suite.</documentation>
+	<dependencies>
+		<dependency>
+			<libraryName>sap.ui.core</libraryName>
+		</dependency>
+		<dependency>
+			<libraryName>sap.m</libraryName>
+		</dependency>
+	</dependencies>
+</library>

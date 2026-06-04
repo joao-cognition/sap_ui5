@@ -1,0 +1,7 @@
+[
+	{ "ApprovalID": "AP-2023-0001", "PurchaseOrderID": "4100000045", "Requester": "M. Schneider", "Vendor": "Steelworks Ltd", "Amount": "45200.00", "Currency": "EUR", "SubmittedAt": "2023-11-01T00:00:00", "ApprovalStatus": "Pending", "Note": "Raw material restock Q4" },
+	{ "ApprovalID": "AP-2023-0002", "PurchaseOrderID": "4100000046", "Requester": "L. Tanaka", "Vendor": "Sakura Components KK", "Amount": "1280000", "Currency": "JPY", "SubmittedAt": "2023-11-03T00:00:00", "ApprovalStatus": "Pending", "Note": "Annual electronics frame contract" },
+	{ "ApprovalID": "AP-2023-0003", "PurchaseOrderID": "4100000047", "Requester": "P. Okafor", "Vendor": "Global Logistics Inc", "Amount": "8750.00", "Currency": "USD", "SubmittedAt": "2023-11-06T00:00:00", "ApprovalStatus": "Approved", "Note": "Freight surcharge" },
+	{ "ApprovalID": "AP-2023-0004", "PurchaseOrderID": "4100000048", "Requester": "S. Rossi", "Vendor": "Office Depot EU", "Amount": "320.00", "Currency": "EUR", "SubmittedAt": "2023-11-08T00:00:00", "ApprovalStatus": "Rejected", "Note": "Over budget for cost center" },
+	{ "ApprovalID": "AP-2023-0005", "PurchaseOrderID": "4100000049", "Requester": "M. Schneider", "Vendor": "Helios Energy AG", "Amount": "117400.00", "Currency": "EUR", "SubmittedAt": "2023-11-10T00:00:00", "ApprovalStatus": "Pending", "Note": "Plant solar retrofit" }
+]

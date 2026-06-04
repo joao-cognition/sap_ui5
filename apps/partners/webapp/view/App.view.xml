@@ -1,0 +1,11 @@
+<mvc:View
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	displayBlock="true"
+	height="100%">
+	<App id="app">
+		<pages>
+			<mvc:XMLView viewName="com.meridian.partners.view.Partners"/>
+		</pages>
+	</App>
+</mvc:View>

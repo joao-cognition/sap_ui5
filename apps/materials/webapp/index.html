@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<title>Material Master - Meridian</title>
+
+	<!-- WORST OFFENDER. Migration items MM-01..MM-06.
+	     - UI5 1.38.42 (very old), theme sap_goldreflection (pre-Fiori!)
+	     - SYNCHRONOUS bootstrap, preload off
+	     - loads the DEPRECATED sap.ui.commons + sap.ui.table libraries
+	     - NO Component.js, NO manifest.json: the view is instantiated directly below -->
+	<script
+		id="sap-ui-bootstrap"
+		src="https://openui5.hana.ondemand.com/1.38.42/resources/sap-ui-core.js"
+		data-sap-ui-theme="sap_goldreflection"
+		data-sap-ui-libs="sap.ui.commons,sap.ui.table,sap.m,sap.ui.layout"
+		data-sap-ui-compatVersion="1.16"
+		data-sap-ui-async="false"
+		data-sap-ui-preload=""
+		data-sap-ui-resourceroots='{
+			"com.meridian.materials": "./",
+			"com.meridian.lib.reuse": "../../../shared/com/meridian/lib/reuse"
+		}'>
+	</script>
+
+	<script>
+		// No Component lifecycle. Everything wired in this inline script. Migration MM-01.
+		sap.ui.getCore().attachInit(function () {
+
+			// pull libs in at runtime (sync) - migration MM-05 / X-04
+			jQuery.sap.require("sap.ui.core.util.MockServer");
+			jQuery.sap.require("sap.ui.commons.layout.MatrixLayout");
+
+			// boot the local mock so the synchronous sjax reads resolve - MM-06
+			var oMock = new sap.ui.core.util.MockServer({
+				rootUri: "/sap/opu/odata/sap/ZMM_MATERIAL_SRV/"
+			});
+			sap.ui.core.util.MockServer.config({ autoRespond: true });
+			oMock.simulate("../../../mock/metadata.xml", {
+				sMockdataBaseUrl: "../../../mock",
+				bGenerateMissingMockData: true
+			});
+			oMock.start();
+
+			// instantiate the JSON view directly (no Component, no routing)
+			var oView = sap.ui.view({
+				viewName: "com.meridian.materials.view.Materials",
+				type: sap.ui.core.mvc.ViewType.JSON
+			});
+			oView.placeAt("content");
+		});
+	</script>
+</head>
+<body class="sapUiBody" id="content"></body>
+</html>

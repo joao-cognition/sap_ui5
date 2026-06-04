@@ -1,0 +1,61 @@
+{
+	"Type": "sap.ui.core.mvc.JSONView",
+	"controllerName": "com.meridian.materials.controller.Materials",
+	"content": [
+		{
+			"Type": "sap.m.Page",
+			"title": "Material Master (ZMM_MATERIAL_SRV)",
+			"content": [
+				{
+					"Type": "sap.m.Toolbar",
+					"content": [
+						{ "Type": "sap.ui.commons.Label", "text": "Material:" },
+						{ "Type": "sap.ui.commons.TextField", "id": "searchField", "placeholder": "Filter by id or description" },
+						{ "Type": "sap.ui.commons.Button", "text": "Search", "press": "onSearch" },
+						{ "Type": "sap.m.ToolbarSpacer" },
+						{ "Type": "sap.ui.commons.Button", "text": "Reload", "press": "onReload" }
+					]
+				},
+				{
+					"Type": "sap.ui.table.Table",
+					"id": "materialsTable",
+					"visibleRowCount": 10,
+					"selectionMode": "Single",
+					"rows": "{/materials}",
+					"columns": [
+						{
+							"Type": "sap.ui.table.Column",
+							"label": { "Type": "sap.ui.commons.Label", "text": "Material" },
+							"template": { "Type": "sap.m.Text", "text": "{MaterialID}" }
+						},
+						{
+							"Type": "sap.ui.table.Column",
+							"label": { "Type": "sap.ui.commons.Label", "text": "Description" },
+							"template": { "Type": "sap.m.Text", "text": "{Description}" }
+						},
+						{
+							"Type": "sap.ui.table.Column",
+							"label": { "Type": "sap.ui.commons.Label", "text": "Type" },
+							"template": { "Type": "sap.m.Text", "text": "{MaterialType}" }
+						},
+						{
+							"Type": "sap.ui.table.Column",
+							"label": { "Type": "sap.ui.commons.Label", "text": "Plant" },
+							"template": { "Type": "sap.m.Text", "text": "{Plant}" }
+						},
+						{
+							"Type": "sap.ui.table.Column",
+							"label": { "Type": "sap.ui.commons.Label", "text": "Stock" },
+							"template": { "Type": "sap.m.Text", "text": "{StockQuantity} {BaseUnit}" }
+						},
+						{
+							"Type": "sap.ui.table.Column",
+							"label": { "Type": "sap.ui.commons.Label", "text": "Std Price" },
+							"template": { "Type": "sap.m.ObjectNumber", "number": "{StandardPrice}", "unit": "{Currency}" }
+						}
+					]
+				}
+			]
+		}
+	]
+}

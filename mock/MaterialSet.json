@@ -1,0 +1,8 @@
+[
+	{ "MaterialID": "MAT-1001", "Description": "Servo Motor 24V", "MaterialType": "FERT", "BaseUnit": "PC", "Plant": "1000", "StockQuantity": "320.000", "StandardPrice": "1200.00", "Currency": "EUR" },
+	{ "MaterialID": "MAT-1002", "Description": "Control Board Rev C", "MaterialType": "HALB", "BaseUnit": "PC", "Plant": "1000", "StockQuantity": "85.000", "StandardPrice": "1290.00", "Currency": "EUR" },
+	{ "MaterialID": "MAT-2010", "Description": "Hydraulic Hose 2m", "MaterialType": "HAWA", "BaseUnit": "PC", "Plant": "2000", "StockQuantity": "1240.000", "StandardPrice": "180.00", "Currency": "USD" },
+	{ "MaterialID": "MAT-3001", "Description": "Solar Inverter 5kW", "MaterialType": "FERT", "BaseUnit": "PC", "Plant": "1000", "StockQuantity": "44.000", "StandardPrice": "9800.00", "Currency": "EUR" },
+	{ "MaterialID": "MAT-3002", "Description": "Mounting Rail Set", "MaterialType": "HAWA", "BaseUnit": "SET", "Plant": "1000", "StockQuantity": "210.000", "StandardPrice": "850.00", "Currency": "EUR" },
+	{ "MaterialID": "MAT-4005", "Description": "Marine Bilge Pump", "MaterialType": "FERT", "BaseUnit": "PC", "Plant": "3000", "StockQuantity": "0.000", "StandardPrice": "1474.05", "Currency": "GBP" }
+]

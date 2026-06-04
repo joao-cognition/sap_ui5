@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+.project
+.settings/
+# SAP Web IDE leftovers
+.che/
+neo-app.json.bak

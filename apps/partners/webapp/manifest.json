@@ -1,0 +1,44 @@
+{
+	"_version": "1.4.0",
+	"sap.app": {
+		"id": "com.meridian.partners",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "Business Partners",
+		"applicationVersion": {
+			"version": "0.6.0"
+		},
+		"_comment": "dataSources declared for documentation but NOT consumed - the app uses service/ODataHelper.js (jQuery.ajax). Migration BP-01.",
+		"dataSources": {
+			"partnerService": {
+				"uri": "/sap/opu/odata/sap/ZBP_PARTNER_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "com.meridian.partners.view.App",
+			"type": "XML",
+			"id": "appRoot"
+		},
+		"dependencies": {
+			"minUI5Version": "1.71.0",
+			"libs": {
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.meridian.partners.i18n.i18n"
+				}
+			}
+		}
+	}
+}

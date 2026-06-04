@@ -1,0 +1,8 @@
+[
+	{ "OrderID": "4500000001", "ItemPos": "000010", "MaterialID": "MAT-1001", "Description": "Servo Motor 24V", "Quantity": "10.000", "Unit": "PC", "NetPrice": "1200.00", "Currency": "EUR" },
+	{ "OrderID": "4500000001", "ItemPos": "000020", "MaterialID": "MAT-1002", "Description": "Control Board Rev C", "Quantity": "5.000", "Unit": "PC", "NetPrice": "1290.00", "Currency": "EUR" },
+	{ "OrderID": "4500000002", "ItemPos": "000010", "MaterialID": "MAT-2010", "Description": "Hydraulic Hose 2m", "Quantity": "40.000", "Unit": "PC", "NetPrice": "180.00", "Currency": "USD" },
+	{ "OrderID": "4500000003", "ItemPos": "000010", "MaterialID": "MAT-3001", "Description": "Solar Inverter 5kW", "Quantity": "12.000", "Unit": "PC", "NetPrice": "9800.00", "Currency": "EUR" },
+	{ "OrderID": "4500000003", "ItemPos": "000020", "MaterialID": "MAT-3002", "Description": "Mounting Rail Set", "Quantity": "12.000", "Unit": "SET", "NetPrice": "850.00", "Currency": "EUR" },
+	{ "OrderID": "4500000006", "ItemPos": "000010", "MaterialID": "MAT-4005", "Description": "Marine Bilge Pump", "Quantity": "15.000", "Unit": "PC", "NetPrice": "1474.05", "Currency": "GBP" }
+]

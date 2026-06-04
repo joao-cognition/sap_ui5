@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Consolidated OData V2 $metadata for the four Z services, flattened into one mock
+     EDMX for local development. In production these are four separate Gateway services:
+     ZSD_SALESORDER_SRV, ZMM_APPROVAL_SRV, ZMM_MATERIAL_SRV, ZBP_PARTNER_SRV. -->
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+		xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+		xmlns:sap="http://www.sap.com/Protocols/SAPData">
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema Namespace="MERIDIAN" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+
+			<EntityType Name="SalesOrder" sap:content-version="1">
+				<Key><PropertyRef Name="OrderID"/></Key>
+				<Property Name="OrderID" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Order"/>
+				<Property Name="CustomerName" Type="Edm.String" MaxLength="80" sap:label="Customer"/>
+				<Property Name="CustomerID" Type="Edm.String" MaxLength="10" sap:label="Customer ID"/>
+				<Property Name="CreatedAt" Type="Edm.DateTime" sap:label="Created On"/>
+				<Property Name="Status" Type="Edm.String" MaxLength="20" sap:label="Status"/>
+				<Property Name="Currency" Type="Edm.String" MaxLength="5" sap:semantics="currency-code"/>
+				<Property Name="GrossAmount" Type="Edm.Decimal" Precision="15" Scale="2" sap:unit="Currency" sap:label="Gross Amount"/>
+				<Property Name="SalesOrg" Type="Edm.String" MaxLength="4" sap:label="Sales Org"/>
+				<NavigationProperty Name="ToLineItems" Relationship="MERIDIAN.SalesOrder_LineItems" FromRole="FromOrder" ToRole="ToItems"/>
+			</EntityType>
+
+			<EntityType Name="SalesOrderItem" sap:content-version="1">
+				<Key><PropertyRef Name="OrderID"/><PropertyRef Name="ItemPos"/></Key>
+				<Property Name="OrderID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+				<Property Name="ItemPos" Type="Edm.String" Nullable="false" MaxLength="6"/>
+				<Property Name="MaterialID" Type="Edm.String" MaxLength="18" sap:label="Material"/>
+				<Property Name="Description" Type="Edm.String" MaxLength="80"/>
+				<Property Name="Quantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+				<Property Name="Unit" Type="Edm.String" MaxLength="3" sap:semantics="unit-of-measure"/>
+				<Property Name="NetPrice" Type="Edm.Decimal" Precision="15" Scale="2"/>
+				<Property Name="Currency" Type="Edm.String" MaxLength="5" sap:semantics="currency-code"/>
+			</EntityType>
+
+			<EntityType Name="PurchaseApproval" sap:content-version="1">
+				<Key><PropertyRef Name="ApprovalID"/></Key>
+				<Property Name="ApprovalID" Type="Edm.String" Nullable="false" MaxLength="12"/>
+				<Property Name="PurchaseOrderID" Type="Edm.String" MaxLength="10" sap:label="PO Number"/>
+				<Property Name="Requester" Type="Edm.String" MaxLength="80"/>
+				<Property Name="Vendor" Type="Edm.String" MaxLength="80"/>
+				<Property Name="Amount" Type="Edm.Decimal" Precision="15" Scale="2"/>
+				<Property Name="Currency" Type="Edm.String" MaxLength="5" sap:semantics="currency-code"/>
+				<Property Name="SubmittedAt" Type="Edm.DateTime"/>
+				<Property Name="ApprovalStatus" Type="Edm.String" MaxLength="12" sap:label="Status"/>
+				<Property Name="Note" Type="Edm.String" MaxLength="255"/>
+			</EntityType>
+
+			<EntityType Name="Material" sap:content-version="1">
+				<Key><PropertyRef Name="MaterialID"/></Key>
+				<Property Name="MaterialID" Type="Edm.String" Nullable="false" MaxLength="18"/>
+				<Property Name="Description" Type="Edm.String" MaxLength="80"/>
+				<Property Name="MaterialType" Type="Edm.String" MaxLength="4"/>
+				<Property Name="BaseUnit" Type="Edm.String" MaxLength="3" sap:semantics="unit-of-measure"/>
+				<Property Name="Plant" Type="Edm.String" MaxLength="4"/>
+				<Property Name="StockQuantity" Type="Edm.Decimal" Precision="13" Scale="3"/>
+				<Property Name="StandardPrice" Type="Edm.Decimal" Precision="15" Scale="2"/>
+				<Property Name="Currency" Type="Edm.String" MaxLength="5" sap:semantics="currency-code"/>
+			</EntityType>
+
+			<EntityType Name="BusinessPartner" sap:content-version="1">
+				<Key><PropertyRef Name="PartnerID"/></Key>
+				<Property Name="PartnerID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+				<Property Name="PartnerType" Type="Edm.String" MaxLength="10"/>
+				<Property Name="Name" Type="Edm.String" MaxLength="80"/>
+				<Property Name="City" Type="Edm.String" MaxLength="40"/>
+				<Property Name="Country" Type="Edm.String" MaxLength="3"/>
+				<Property Name="Email" Type="Edm.String" MaxLength="120"/>
+				<Property Name="Phone" Type="Edm.String" MaxLength="30"/>
+				<Property Name="Blocked" Type="Edm.Boolean"/>
+			</EntityType>
+
+			<Association Name="SalesOrder_LineItems">
+				<End Type="MERIDIAN.SalesOrder" Multiplicity="1" Role="FromOrder"/>
+				<End Type="MERIDIAN.SalesOrderItem" Multiplicity="*" Role="ToItems"/>
+			</Association>
+
+			<EntityContainer Name="MERIDIAN_Entities" m:IsDefaultEntityContainer="true">
+				<EntitySet Name="SalesOrderSet" EntityType="MERIDIAN.SalesOrder" sap:content-version="1"/>
+				<EntitySet Name="SalesOrderItemSet" EntityType="MERIDIAN.SalesOrderItem" sap:content-version="1"/>
+				<EntitySet Name="PurchaseApprovalSet" EntityType="MERIDIAN.PurchaseApproval" sap:content-version="1"/>
+				<EntitySet Name="MaterialSet" EntityType="MERIDIAN.Material" sap:content-version="1"/>
+				<EntitySet Name="BusinessPartnerSet" EntityType="MERIDIAN.BusinessPartner" sap:content-version="1"/>
+				<AssociationSet Name="SalesOrder_LineItemsSet" Association="MERIDIAN.SalesOrder_LineItems">
+					<End EntitySet="SalesOrderSet" Role="FromOrder"/>
+					<End EntitySet="SalesOrderItemSet" Role="ToItems"/>
+				</AssociationSet>
+			</EntityContainer>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

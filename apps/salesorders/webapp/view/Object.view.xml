@@ -1,0 +1,51 @@
+<mvc:View
+	controllerName="com.meridian.salesorders.controller.Object"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form">
+	<Page id="objectPage" title="Order {OrderID}" showNavButton="true" navButtonPress="onNavBack">
+		<content>
+			<ObjectHeader
+				title="Order {OrderID}"
+				number="{path: 'GrossAmount', formatter: '.formatter.amountOnly'}"
+				numberUnit="{Currency}">
+				<attributes>
+					<ObjectAttribute title="Customer" text="{CustomerName}"/>
+					<ObjectAttribute title="Customer ID" text="{CustomerID}"/>
+					<ObjectAttribute title="Sales Org" text="{SalesOrg}"/>
+					<ObjectAttribute title="Created" text="{path: 'CreatedAt', formatter: '.formatter.shortDate'}"/>
+				</attributes>
+				<statuses>
+					<ObjectStatus
+						text="{Status}"
+						state="{path: 'Status', formatter: '.formatter.statusState'}"/>
+				</statuses>
+			</ObjectHeader>
+
+			<Panel headerText="Line Items" class="sapUiResponsiveMargin" width="auto">
+				<Table id="itemsTable" items="{ToLineItems}">
+					<columns>
+						<Column><Text text="Pos"/></Column>
+						<Column><Text text="Material"/></Column>
+						<Column><Text text="Description"/></Column>
+						<Column hAlign="End"><Text text="Qty"/></Column>
+						<Column hAlign="End"><Text text="Net Price"/></Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<Text text="{ItemPos}"/>
+								<Text text="{MaterialID}"/>
+								<Text text="{Description}"/>
+								<Text text="{Quantity} {Unit}"/>
+								<ObjectNumber
+									number="{path: 'NetPrice', formatter: '.formatter.amountOnly'}"
+									unit="{Currency}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+		</content>
+	</Page>
+</mvc:View>

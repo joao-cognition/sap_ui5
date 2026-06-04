@@ -1,0 +1,8 @@
+[
+	{ "PartnerID": "0000100023", "PartnerType": "Customer", "Name": "Atlas Robotics GmbH", "City": "Munich", "Country": "DE", "Email": "procurement@atlas-robotics.de", "Phone": "+49 89 1234567", "Blocked": false },
+	{ "PartnerID": "0000100044", "PartnerType": "Customer", "Name": "Northwind Traders", "City": "Seattle", "Country": "US", "Email": "orders@northwind.example", "Phone": "+1 206 555 0142", "Blocked": false },
+	{ "PartnerID": "0000100051", "PartnerType": "Both", "Name": "Helios Energy AG", "City": "Zurich", "Country": "CH", "Email": "info@helios-energy.ch", "Phone": "+41 44 555 0190", "Blocked": false },
+	{ "PartnerID": "0000100067", "PartnerType": "Vendor", "Name": "Sakura Components KK", "City": "Osaka", "Country": "JP", "Email": "sales@sakura-comp.co.jp", "Phone": "+81 6 6543 2100", "Blocked": false },
+	{ "PartnerID": "0000100088", "PartnerType": "Customer", "Name": "Coastal Marine Supplies", "City": "Plymouth", "Country": "GB", "Email": "buy@coastalmarine.co.uk", "Phone": "+44 1752 555 014", "Blocked": true },
+	{ "PartnerID": "0000100002", "PartnerType": "Internal", "Name": "Meridian Internal Logistics", "City": "Hamburg", "Country": "DE", "Email": "logistics@meridian.example", "Phone": "+49 40 555 0100", "Blocked": false }
+]

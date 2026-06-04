@@ -1,0 +1,8 @@
+[
+	{ "OrderID": "4500000001", "CustomerName": "Atlas Robotics GmbH", "CustomerID": "0000100023", "CreatedAt": "2023-11-02T00:00:00", "Status": "Open", "Currency": "EUR", "GrossAmount": "18450.00", "SalesOrg": "1000" },
+	{ "OrderID": "4500000002", "CustomerName": "Northwind Traders", "CustomerID": "0000100044", "CreatedAt": "2023-11-04T00:00:00", "Status": "In Process", "Currency": "USD", "GrossAmount": "9320.50", "SalesOrg": "2000" },
+	{ "OrderID": "4500000003", "CustomerName": "Helios Energy AG", "CustomerID": "0000100051", "CreatedAt": "2023-11-05T00:00:00", "Status": "Completed", "Currency": "EUR", "GrossAmount": "127800.00", "SalesOrg": "1000" },
+	{ "OrderID": "4500000004", "CustomerName": "Sakura Components KK", "CustomerID": "0000100067", "CreatedAt": "2023-11-07T00:00:00", "Status": "Open", "Currency": "JPY", "GrossAmount": "3450000", "SalesOrg": "3000" },
+	{ "OrderID": "4500000005", "CustomerName": "Meridian Internal Logistics", "CustomerID": "0000100002", "CreatedAt": "2023-11-09T00:00:00", "Status": "Blocked", "Currency": "EUR", "GrossAmount": "640.00", "SalesOrg": "1000" },
+	{ "OrderID": "4500000006", "CustomerName": "Coastal Marine Supplies", "CustomerID": "0000100088", "CreatedAt": "2023-11-12T00:00:00", "Status": "In Process", "Currency": "GBP", "GrossAmount": "22110.75", "SalesOrg": "2000" }
+]
