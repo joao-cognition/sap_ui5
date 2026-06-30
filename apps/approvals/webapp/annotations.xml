@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Local UI annotations for the Purchase Approvals Fiori elements app (List Report).
+     Targets the consolidated OData V2 mock service ZMM_APPROVAL_SRV (MERIDIAN namespace).
+     Approve/reject are exposed as bound actions (ApprovePurchase / RejectPurchase) via
+     UI.DataFieldForAction, replacing the manual MERGE+CSRF logic in util/ServiceClient.js. -->
+<edmx:Edmx Version="1.0"
+		xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		xmlns:edm="http://docs.oasis-open.org/odata/ns/edm">
+	<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+		<edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+		<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="MERIDIAN.UI">
+
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.PurchaseApproval/ApprovalID">
+				<Annotation Term="Common.Label" String="Approval ID"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.PurchaseApproval/Requester">
+				<Annotation Term="Common.Label" String="Requester"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.PurchaseApproval/Vendor">
+				<Annotation Term="Common.Label" String="Vendor"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.PurchaseApproval/Amount">
+				<Annotation Term="Common.Label" String="Amount"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.PurchaseApproval/SubmittedAt">
+				<Annotation Term="Common.Label" String="Submitted On"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.PurchaseApproval/Note">
+				<Annotation Term="Common.Label" String="Note"/>
+			</Annotations>
+
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.PurchaseApproval">
+
+				<Annotation Term="UI.HeaderInfo">
+					<Record Type="UI.HeaderInfoType">
+						<PropertyValue Property="TypeName" String="Purchase Approval"/>
+						<PropertyValue Property="TypeNamePlural" String="Purchase Approvals"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="PurchaseOrderID"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="Vendor"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+
+				<Annotation Term="UI.SelectionFields">
+					<Collection>
+						<PropertyPath>ApprovalStatus</PropertyPath>
+						<PropertyPath>Vendor</PropertyPath>
+					</Collection>
+				</Annotation>
+
+				<Annotation Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataFieldForAction">
+							<PropertyValue Property="Label" String="Approve"/>
+							<PropertyValue Property="Action" String="MERIDIAN.MERIDIAN_Entities/ApprovePurchase"/>
+							<PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+						</Record>
+						<Record Type="UI.DataFieldForAction">
+							<PropertyValue Property="Label" String="Reject"/>
+							<PropertyValue Property="Action" String="MERIDIAN.MERIDIAN_Entities/RejectPurchase"/>
+							<PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="ApprovalID"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="PurchaseOrderID"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Requester"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Vendor"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Amount"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Currency"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="ApprovalStatus"/>
+						</Record>
+					</Collection>
+				</Annotation>
+
+				<Annotation Term="UI.FieldGroup" Qualifier="GeneralInfo">
+					<Record Type="UI.FieldGroupType">
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="PurchaseOrderID"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="Requester"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="Vendor"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="Amount"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="Currency"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="SubmittedAt"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="ApprovalStatus"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="Note"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+
+				<Annotation Term="UI.Facets">
+					<Collection>
+						<Record Type="UI.ReferenceFacet">
+							<PropertyValue Property="Label" String="Approval Details"/>
+							<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneralInfo"/>
+						</Record>
+					</Collection>
+				</Annotation>
+
+			</Annotations>
+
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

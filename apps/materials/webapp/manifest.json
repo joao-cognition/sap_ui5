@@ -1,7 +1,7 @@
 {
 	"_version": "1.40.0",
 	"sap.app": {
-		"id": "com.meridian.approvals",
+		"id": "com.meridian.materials",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
@@ -11,7 +11,7 @@
 		},
 		"dataSources": {
 			"mainService": {
-				"uri": "/sap/opu/odata/sap/ZMM_APPROVAL_SRV/",
+				"uri": "/sap/opu/odata/sap/ZMM_MATERIAL_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
@@ -28,7 +28,7 @@
 		}
 	},
 	"sap.ui": {
-		"technicalName": "ZMM_APPROVAL",
+		"technicalName": "ZMM_MATERIAL",
 		"deviceTypes": {
 			"desktop": true,
 			"tablet": true,
@@ -51,7 +51,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "com.meridian.approvals.i18n.i18n"
+					"bundleName": "com.meridian.materials.i18n.i18n"
 				}
 			},
 			"": {
@@ -71,8 +71,8 @@
 	"sap.ui.generic.app": {
 		"_version": "1.3.0",
 		"pages": {
-			"ListReport|PurchaseApproval": {
-				"entitySet": "PurchaseApprovalSet",
+			"ListReport|Material": {
+				"entitySet": "MaterialSet",
 				"component": {
 					"name": "sap.suite.ui.generic.template.ListReport",
 					"list": true,
@@ -82,8 +82,8 @@
 					}
 				},
 				"pages": {
-					"ObjectPage|PurchaseApproval": {
-						"entitySet": "PurchaseApprovalSet",
+					"ObjectPage|Material": {
+						"entitySet": "MaterialSet",
 						"component": {
 							"name": "sap.suite.ui.generic.template.ObjectPage"
 						}
