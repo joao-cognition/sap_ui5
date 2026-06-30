@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Local UI annotations for the Sales Orders Fiori elements app (List Report + Object Page).
+     Targets the consolidated OData V2 mock service ZSD_SALESORDER_SRV (MERIDIAN namespace). -->
+<edmx:Edmx Version="1.0"
+		xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		xmlns:edm="http://docs.oasis-open.org/odata/ns/edm">
+	<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+		<edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+		<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="MERIDIAN.UI">
+
+			<!-- ================= SalesOrder (header) ================= -->
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.SalesOrder">
+
+				<Annotation Term="UI.HeaderInfo">
+					<Record Type="UI.HeaderInfoType">
+						<PropertyValue Property="TypeName" String="Sales Order"/>
+						<PropertyValue Property="TypeNamePlural" String="Sales Orders"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="OrderID"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="CustomerName"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+
+				<Annotation Term="UI.SelectionFields">
+					<Collection>
+						<PropertyPath>Status</PropertyPath>
+						<PropertyPath>SalesOrg</PropertyPath>
+					</Collection>
+				</Annotation>
+
+				<Annotation Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="OrderID"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="CustomerName"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Status"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="SalesOrg"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="CreatedAt"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="GrossAmount"/>
+						</Record>
+					</Collection>
+				</Annotation>
+
+				<Annotation Term="UI.FieldGroup" Qualifier="GeneralInfo">
+					<Record Type="UI.FieldGroupType">
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="CustomerName"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="CustomerID"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="SalesOrg"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="Status"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="CreatedAt"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="GrossAmount"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+
+				<Annotation Term="UI.Facets">
+					<Collection>
+						<Record Type="UI.ReferenceFacet">
+							<PropertyValue Property="Label" String="General Information"/>
+							<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneralInfo"/>
+						</Record>
+						<Record Type="UI.ReferenceFacet">
+							<PropertyValue Property="Label" String="Line Items"/>
+							<PropertyValue Property="Target" AnnotationPath="ToLineItems/@UI.LineItem"/>
+						</Record>
+					</Collection>
+				</Annotation>
+
+			</Annotations>
+
+			<!-- ================= SalesOrderItem (Object Page line-items table) ================= -->
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.SalesOrderItem/ItemPos">
+				<Annotation Term="Common.Label" String="Item"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.SalesOrderItem/MaterialID">
+				<Annotation Term="Common.Label" String="Material"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.SalesOrderItem/Description">
+				<Annotation Term="Common.Label" String="Description"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.SalesOrderItem/Quantity">
+				<Annotation Term="Common.Label" String="Quantity"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.SalesOrderItem/NetPrice">
+				<Annotation Term="Common.Label" String="Net Price"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.SalesOrderItem">
+
+				<Annotation Term="UI.HeaderInfo">
+					<Record Type="UI.HeaderInfoType">
+						<PropertyValue Property="TypeName" String="Line Item"/>
+						<PropertyValue Property="TypeNamePlural" String="Line Items"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="ItemPos"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="Description"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+
+				<Annotation Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="ItemPos"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="MaterialID"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Description"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Quantity"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="NetPrice"/>
+						</Record>
+					</Collection>
+				</Annotation>
+
+			</Annotations>
+
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
