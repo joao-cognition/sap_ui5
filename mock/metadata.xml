@@ -85,6 +85,23 @@
 					<End EntitySet="SalesOrderSet" Role="FromOrder"/>
 					<End EntitySet="SalesOrderItemSet" Role="ToItems"/>
 				</AssociationSet>
+
+				<!-- Bound actions (OData V2 function imports). sap:action-for marks them as bound
+				     to the entity type so Fiori elements surfaces them via UI.DataFieldForAction
+				     and passes the selected row's key. They replace the hand-built $batch/MERGE
+				     calls previously in partners/service/ODataHelper.js and approvals/util/ServiceClient.js. -->
+				<FunctionImport Name="BlockPartner" ReturnType="MERIDIAN.BusinessPartner" EntitySet="BusinessPartnerSet" m:HttpMethod="POST" sap:action-for="MERIDIAN.BusinessPartner">
+					<Parameter Name="PartnerID" Type="Edm.String" Mode="In" Nullable="false" MaxLength="10"/>
+				</FunctionImport>
+				<FunctionImport Name="UnblockPartner" ReturnType="MERIDIAN.BusinessPartner" EntitySet="BusinessPartnerSet" m:HttpMethod="POST" sap:action-for="MERIDIAN.BusinessPartner">
+					<Parameter Name="PartnerID" Type="Edm.String" Mode="In" Nullable="false" MaxLength="10"/>
+				</FunctionImport>
+				<FunctionImport Name="ApprovePurchase" ReturnType="MERIDIAN.PurchaseApproval" EntitySet="PurchaseApprovalSet" m:HttpMethod="POST" sap:action-for="MERIDIAN.PurchaseApproval">
+					<Parameter Name="ApprovalID" Type="Edm.String" Mode="In" Nullable="false" MaxLength="12"/>
+				</FunctionImport>
+				<FunctionImport Name="RejectPurchase" ReturnType="MERIDIAN.PurchaseApproval" EntitySet="PurchaseApprovalSet" m:HttpMethod="POST" sap:action-for="MERIDIAN.PurchaseApproval">
+					<Parameter Name="ApprovalID" Type="Edm.String" Mode="In" Nullable="false" MaxLength="12"/>
+				</FunctionImport>
 			</EntityContainer>
 		</Schema>
 	</edmx:DataServices>

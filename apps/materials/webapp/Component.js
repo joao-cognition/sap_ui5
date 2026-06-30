@@ -3,8 +3,8 @@ sap.ui.define([
 ], function (AppComponent) {
 	"use strict";
 
-	// SAP Fiori elements (smart template) application component for Purchase Approvals.
-	return AppComponent.extend("com.meridian.approvals.Component", {
+	// SAP Fiori elements (smart template) application component for Material Master.
+	return AppComponent.extend("com.meridian.materials.Component", {
 		metadata: {
 			manifest: "json"
 		}

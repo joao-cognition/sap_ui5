@@ -1,7 +1,7 @@
 {
 	"_version": "1.40.0",
 	"sap.app": {
-		"id": "com.meridian.partners",
+		"id": "com.meridian.materials",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"title": "{{appTitle}}",
@@ -11,7 +11,7 @@
 		},
 		"dataSources": {
 			"mainService": {
-				"uri": "/sap/opu/odata/sap/ZBP_PARTNER_SRV/",
+				"uri": "/sap/opu/odata/sap/ZMM_MATERIAL_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
@@ -25,22 +25,10 @@
 					"localUri": "annotations.xml"
 				}
 			}
-		},
-		"crossNavigation": {
-			"inbounds": {
-				"BusinessPartner-display": {
-					"semanticObject": "BusinessPartner",
-					"action": "display",
-					"signature": {
-						"parameters": {},
-						"additionalParameters": "allowed"
-					}
-				}
-			}
 		}
 	},
 	"sap.ui": {
-		"technicalName": "ZBP_PARTNER",
+		"technicalName": "ZMM_MATERIAL",
 		"deviceTypes": {
 			"desktop": true,
 			"tablet": true,
@@ -63,7 +51,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "com.meridian.partners.i18n.i18n"
+					"bundleName": "com.meridian.materials.i18n.i18n"
 				}
 			},
 			"": {
@@ -83,8 +71,8 @@
 	"sap.ui.generic.app": {
 		"_version": "1.3.0",
 		"pages": {
-			"ListReport|BusinessPartner": {
-				"entitySet": "BusinessPartnerSet",
+			"ListReport|Material": {
+				"entitySet": "MaterialSet",
 				"component": {
 					"name": "sap.suite.ui.generic.template.ListReport",
 					"list": true,
@@ -94,8 +82,8 @@
 					}
 				},
 				"pages": {
-					"ObjectPage|BusinessPartner": {
-						"entitySet": "BusinessPartnerSet",
+					"ObjectPage|Material": {
+						"entitySet": "MaterialSet",
 						"component": {
 							"name": "sap.suite.ui.generic.template.ObjectPage"
 						}

@@ -1,25 +1,94 @@
 {
-	"_version": "1.2.0",
+	"_version": "1.40.0",
 	"sap.app": {
-		"_comment": "PARTIAL descriptor. No dataSources, no models block. Data is fetched with raw jQuery.ajax in util/ServiceClient.js. Migration items AP-02 / AP-03.",
 		"id": "com.meridian.approvals",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
-		"title": "Purchase Approvals",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
 		"applicationVersion": {
-			"version": "0.4.1"
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/sap/opu/odata/sap/ZMM_APPROVAL_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"annotations": ["localAnnotations"]
+				}
+			},
+			"localAnnotations": {
+				"uri": "annotations.xml",
+				"type": "ODataAnnotation",
+				"settings": {
+					"localUri": "annotations.xml"
+				}
+			}
 		}
 	},
-	"sap.ui5": {
-		"rootView": {
-			"viewName": "com.meridian.approvals.view.App",
-			"type": "JS"
+	"sap.ui": {
+		"technicalName": "ZMM_APPROVAL",
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
 		},
+		"supportedThemes": ["sap_horizon"]
+	},
+	"sap.ui5": {
 		"dependencies": {
-			"minUI5Version": "1.52.0",
+			"minUI5Version": "1.120.0",
 			"libs": {
 				"sap.m": {},
-				"sap.ui.layout": {}
+				"sap.ui.core": {},
+				"sap.ui.comp": {},
+				"sap.ui.generic.app": {},
+				"sap.suite.ui.generic.template": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.meridian.approvals.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Inline",
+					"refreshAfterChange": false
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		}
+	},
+	"sap.ui.generic.app": {
+		"_version": "1.3.0",
+		"pages": {
+			"ListReport|PurchaseApproval": {
+				"entitySet": "PurchaseApprovalSet",
+				"component": {
+					"name": "sap.suite.ui.generic.template.ListReport",
+					"list": true,
+					"settings": {
+						"smartVariantManagement": true,
+						"condensedTableLayout": true
+					}
+				},
+				"pages": {
+					"ObjectPage|PurchaseApproval": {
+						"entitySet": "PurchaseApprovalSet",
+						"component": {
+							"name": "sap.suite.ui.generic.template.ObjectPage"
+						}
+					}
+				}
 			}
 		}
 	}

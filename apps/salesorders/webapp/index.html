@@ -2,36 +2,31 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>Sales Orders - Meridian</title>
+	<style>html, body { height: 100%; margin: 0; } #content { height: 100%; }</style>
 
-	<!-- LEGACY BOOTSTRAP: pinned to 1.71.69, theme sap_belize, SYNCHRONOUS (async=false).
-	     Migration items X-01 / X-02 / X-03. -->
+	<!-- SAP Fiori elements bootstrap: SAPUI5 1.120 (served by @ui5/cli), theme sap_horizon,
+	     asynchronous, component started declaratively via ComponentSupport. -->
 	<script
 		id="sap-ui-bootstrap"
-		src="https://openui5.hana.ondemand.com/1.71.69/resources/sap-ui-core.js"
-		data-sap-ui-theme="sap_belize"
-		data-sap-ui-libs="sap.m,sap.ui.layout,sap.ui.core"
-		data-sap-ui-compatVersion="edge"
-		data-sap-ui-async="false"
-		data-sap-ui-preload="async"
-		data-sap-ui-resourceroots='{
-			"com.meridian.salesorders": "./",
-			"com.meridian.lib.reuse": "../../../shared/com/meridian/lib/reuse"
-		}'>
-	</script>
-
-	<script>
-		// Manual component instantiation instead of ComponentSupport data-attributes. Debt.
-		sap.ui.getCore().attachInit(function () {
-			new sap.m.Shell({
-				app: new sap.ui.core.ComponentContainer({
-					height: "100%",
-					name: "com.meridian.salesorders"
-				})
-			}).placeAt("content");
-		});
+		src="resources/sap-ui-core.js"
+		data-sap-ui-theme="sap_horizon"
+		data-sap-ui-resource-roots='{"com.meridian.salesorders": "./"}'
+		data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
+		data-sap-ui-compat-version="edge"
+		data-sap-ui-async="true"
+		data-sap-ui-frame-options="trusted">
 	</script>
 </head>
-<body class="sapUiBody" id="content"></body>
+<body class="sapUiBody sapUiSizeCompact">
+	<div
+		id="content"
+		data-sap-ui-component
+		data-name="com.meridian.salesorders"
+		data-id="container"
+		data-settings='{"id":"salesorders"}'
+		data-height="100%">
+	</div>
+</body>
 </html>

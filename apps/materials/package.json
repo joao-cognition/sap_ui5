@@ -1,0 +1,14 @@
+{
+  "name": "com.meridian.materials",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Material Master - SAP Fiori elements (List Report, OData V2)",
+  "scripts": {
+    "start": "ui5 serve --port 8084 -o index.html",
+    "build": "ui5 build --clean-dest --include-task=generateManifestBundle"
+  },
+  "devDependencies": {
+    "@sap-ux/ui5-middleware-fe-mockserver": "^2",
+    "@ui5/cli": "^3"
+  }
+}

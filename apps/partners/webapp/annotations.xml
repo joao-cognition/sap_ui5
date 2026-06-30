@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Local UI annotations for the Business Partners Fiori elements app (List Report).
+     Targets the consolidated OData V2 mock service ZBP_PARTNER_SRV (MERIDIAN namespace).
+     The block/unblock behaviour is exposed as bound actions (BlockPartner / UnblockPartner)
+     via UI.DataFieldForAction, replacing the hand-built $batch in service/ODataHelper.js. -->
+<edmx:Edmx Version="1.0"
+		xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		xmlns:edm="http://docs.oasis-open.org/odata/ns/edm">
+	<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+		<edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+		<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="MERIDIAN.UI">
+
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.BusinessPartner/PartnerID">
+				<Annotation Term="Common.Label" String="Partner ID"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.BusinessPartner/PartnerType">
+				<Annotation Term="Common.Label" String="Type"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.BusinessPartner/Name">
+				<Annotation Term="Common.Label" String="Name"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.BusinessPartner/City">
+				<Annotation Term="Common.Label" String="City"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.BusinessPartner/Country">
+				<Annotation Term="Common.Label" String="Country"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.BusinessPartner/Email">
+				<Annotation Term="Common.Label" String="Email"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.BusinessPartner/Phone">
+				<Annotation Term="Common.Label" String="Phone"/>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.BusinessPartner/Blocked">
+				<Annotation Term="Common.Label" String="Blocked"/>
+			</Annotations>
+
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="MERIDIAN.BusinessPartner">
+
+				<Annotation Term="UI.HeaderInfo">
+					<Record Type="UI.HeaderInfoType">
+						<PropertyValue Property="TypeName" String="Business Partner"/>
+						<PropertyValue Property="TypeNamePlural" String="Business Partners"/>
+						<PropertyValue Property="Title">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="Name"/>
+							</Record>
+						</PropertyValue>
+						<PropertyValue Property="Description">
+							<Record Type="UI.DataField">
+								<PropertyValue Property="Value" Path="PartnerID"/>
+							</Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+
+				<Annotation Term="UI.SelectionFields">
+					<Collection>
+						<PropertyPath>PartnerType</PropertyPath>
+						<PropertyPath>Country</PropertyPath>
+						<PropertyPath>Blocked</PropertyPath>
+					</Collection>
+				</Annotation>
+
+				<Annotation Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataFieldForAction">
+							<PropertyValue Property="Label" String="Block"/>
+							<PropertyValue Property="Action" String="MERIDIAN.MERIDIAN_Entities/BlockPartner"/>
+							<PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+						</Record>
+						<Record Type="UI.DataFieldForAction">
+							<PropertyValue Property="Label" String="Unblock"/>
+							<PropertyValue Property="Action" String="MERIDIAN.MERIDIAN_Entities/UnblockPartner"/>
+							<PropertyValue Property="InvocationGrouping" EnumMember="UI.OperationGroupingType/Isolated"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="PartnerID"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Name"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="PartnerType"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="City"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Country"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Email"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Blocked"/>
+						</Record>
+					</Collection>
+				</Annotation>
+
+				<Annotation Term="UI.FieldGroup" Qualifier="GeneralInfo">
+					<Record Type="UI.FieldGroupType">
+						<PropertyValue Property="Data">
+							<Collection>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="PartnerType"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="City"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="Country"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="Email"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="Phone"/>
+								</Record>
+								<Record Type="UI.DataField">
+									<PropertyValue Property="Value" Path="Blocked"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+
+				<Annotation Term="UI.Facets">
+					<Collection>
+						<Record Type="UI.ReferenceFacet">
+							<PropertyValue Property="Label" String="General Information"/>
+							<PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneralInfo"/>
+						</Record>
+					</Collection>
+				</Annotation>
+
+			</Annotations>
+
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
