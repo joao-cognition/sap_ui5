@@ -24,48 +24,63 @@
 	</style>
 
 	<script>
-		sap.ui.getCore().attachInit(function () {
+		// Explicit module imports keep the launchpad robust under async bootstrap on UI5 1.120
+		// (the legacy sap.f.* / sap.m.* globals are not guaranteed to be populated synchronously).
+		sap.ui.require([
+			"sap/ui/core/Core",
+			"sap/f/GridContainer",
+			"sap/f/GridContainerSettings",
+			"sap/m/GenericTile",
+			"sap/m/TileContent",
+			"sap/m/ImageContent",
+			"sap/m/Page",
+			"sap/m/Bar",
+			"sap/m/Title",
+			"sap/m/App",
+			"sap/ui/core/HTML"
+		], function (Core, GridContainer, GridContainerSettings, GenericTile, TileContent, ImageContent, Page, Bar, Title, App, HTML) {
+			"use strict";
 
-			var aTiles = [
-				{ title: "Sales Orders", subtitle: "UI5 1.120 · sap_horizon", info: "ZSD_SALESORDER_SRV", icon: "sap-icon://sales-order", url: "http://localhost:8081/index.html" },
-				{ title: "Purchase Approvals", subtitle: "UI5 1.120 · sap_horizon", info: "ZMM_APPROVAL_SRV", icon: "sap-icon://approvals", url: "http://localhost:8083/index.html" },
-				{ title: "Material Master", subtitle: "UI5 1.120 · sap_horizon", info: "ZMM_MATERIAL_SRV", icon: "sap-icon://product", url: "http://localhost:8084/index.html" },
-				{ title: "Business Partners", subtitle: "UI5 1.120 · sap_horizon", info: "ZBP_PARTNER_SRV", icon: "sap-icon://customer", url: "http://localhost:8082/index.html" }
-			];
+			Core.ready(function () {
 
-			var oGrid = new sap.f.GridContainer({
-				snapToRow: true,
-				layout: new sap.f.GridContainerSettings({ rowSize: "11rem", columnSize: "11rem", gap: "0.75rem" })
+				var aTiles = [
+					{ title: "Sales Orders", subtitle: "UI5 1.120 · sap_horizon", info: "ZSD_SALESORDER_SRV", icon: "sap-icon://sales-order", url: "http://localhost:8081/index.html" },
+					{ title: "Purchase Approvals", subtitle: "UI5 1.120 · sap_horizon", info: "ZMM_APPROVAL_SRV", icon: "sap-icon://approvals", url: "http://localhost:8083/index.html" },
+					{ title: "Material Master", subtitle: "UI5 1.120 · sap_horizon", info: "ZMM_MATERIAL_SRV", icon: "sap-icon://product", url: "http://localhost:8084/index.html" },
+					{ title: "Business Partners", subtitle: "UI5 1.120 · sap_horizon", info: "ZBP_PARTNER_SRV", icon: "sap-icon://customer", url: "http://localhost:8082/index.html" }
+				];
+
+				var oGrid = new GridContainer({
+					snapToRow: true,
+					layout: new GridContainerSettings({ rowSize: "11rem", columnSize: "11rem", gap: "0.75rem" })
+				});
+
+				aTiles.forEach(function (oDef) {
+					oGrid.addItem(new GenericTile({
+						header: oDef.title,
+						subheader: oDef.subtitle,
+						press: function () { window.location.href = oDef.url; },
+						tileContent: [
+							new TileContent({
+								footer: oDef.info,
+								content: new ImageContent({ src: oDef.icon })
+							})
+						]
+					}).addStyleClass("sapUiTinyMargin"));
+				});
+
+				var oPage = new Page({
+					showHeader: true,
+					customHeader: new Bar({
+						contentMiddle: [ new Title({ text: "Meridian Manufacturing — Home" }) ]
+					}),
+					content: [ oGrid ]
+				}).addStyleClass("meridianLaunchpadBg");
+
+				oPage.insertContent(new HTML({ content: "<div class='meridianGroupTitle'>My Apps</div>" }), 0);
+
+				new App({ pages: [ oPage ] }).placeAt("content");
 			});
-
-			aTiles.forEach(function (oDef) {
-				oGrid.addItem(new sap.m.GenericTile({
-					header: oDef.title,
-					subheader: oDef.subtitle,
-					press: function () { window.location.href = oDef.url; },
-					tileContent: [
-						new sap.m.TileContent({
-							footer: oDef.info,
-							content: new sap.m.ImageContent({ src: oDef.icon })
-						})
-					]
-				}).addStyleClass("sapUiTinyMargin"));
-			});
-
-			var oPage = new sap.m.Page({
-				showHeader: true,
-				customHeader: new sap.m.Bar({
-					contentMiddle: [ new sap.m.Title({ text: "Meridian Manufacturing — Home" }) ]
-				}),
-				content: [
-					new sap.m.Text({ text: "Custom ZUI5_MERIDIAN apps", visible: false }),
-					oGrid
-				]
-			}).addStyleClass("meridianLaunchpadBg");
-
-			oPage.insertContent(new sap.ui.core.HTML({ content: "<div class='meridianGroupTitle'>My Apps</div>" }), 0);
-
-			new sap.m.App({ pages: [ oPage ] }).placeAt("content");
 		});
 	</script>
 </head>
