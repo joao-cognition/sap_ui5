@@ -4,7 +4,7 @@
   "private": true,
   "description": "Material Master - SAP Fiori elements (List Report, OData V2)",
   "scripts": {
-    "start": "ui5 serve -o index.html",
+    "start": "ui5 serve --port 8084 -o index.html",
     "build": "ui5 build --clean-dest --include-task=generateManifestBundle"
   },
   "devDependencies": {

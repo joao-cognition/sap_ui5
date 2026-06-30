@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Integration tests (OPA5) - Sales Orders</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<script
+		id="sap-ui-bootstrap"
+		src="../../resources/sap-ui-core.js"
+		data-sap-ui-theme="sap_horizon"
+		data-sap-ui-resource-roots='{"com.meridian.salesorders": "../../"}'
+		data-sap-ui-async="true"
+		data-sap-ui-compat-version="edge">
+	</script>
+
+	<link rel="stylesheet" type="text/css" href="../../resources/sap/ui/thirdparty/qunit-2.css">
+	<script src="../../resources/sap/ui/thirdparty/qunit-2.js"></script>
+	<script src="../../resources/sap/ui/qunit/qunit-junit.js"></script>
+
+	<script>
+		sap.ui.require([
+			"com/meridian/salesorders/test/integration/AllJourneys"
+		], function () {
+			QUnit.start();
+		});
+	</script>
+</head>
+<body class="sapUiBody">
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+</body>
+</html>

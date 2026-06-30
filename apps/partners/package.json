@@ -4,7 +4,7 @@
   "private": true,
   "description": "Business Partners - SAP Fiori elements (List Report, OData V2)",
   "scripts": {
-    "start": "ui5 serve -o index.html",
+    "start": "ui5 serve --port 8082 -o index.html",
     "build": "ui5 build --clean-dest --include-task=generateManifestBundle"
   },
   "devDependencies": {
